@@ -37,7 +37,7 @@ You will be in "PS C:\Windows\System32>", if you downloaded the script to your d
 
 **To run the Powershell script:**
 
-You can only run the script like this when you are in the same directory as the script. I recommend doing a reboot before running the script.
+Run the script when you are in the same directory as the script file. I recommend doing a reboot before running the script.
 Type: ```./updateW11.ps1 ```
 
 **Goals:**
