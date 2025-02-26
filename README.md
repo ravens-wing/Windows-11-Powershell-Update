@@ -35,21 +35,21 @@ Starts services associated with automatic Windows Update.
 What this does:
 
 This is long winded, but explains what the Powershell script does.
-\```
-1. Error Handling: Handle-Error Function
 
+1. Error Handling: Handle-Error Function
+\```
 function Handle-Error {
     param (
         [string]$Message
     )
     Write-Host $Message -ForegroundColor Red
 }
-
+\```
     Purpose: This function is used to handle and display error messages. It takes a string parameter $Message and outputs it to the console in red to signify an error.
     How it works: Whenever an error occurs in the script, this function is called with the error message to show it in the terminal in a visually distinct color (red).
 
 2. Check and Elevate Privileges: Ensure-ElevatedPrivileges Function
-
+\```
 function Ensure-ElevatedPrivileges {
     if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
         Write-Host "Elevating privileges..." -ForegroundColor Yellow
@@ -57,7 +57,7 @@ function Ensure-ElevatedPrivileges {
         exit
     }
 }
-
+\```
     Purpose: This function checks if the script is being run with administrator privileges.
     How it works:
         It checks the current user’s security principal and verifies if they are part of the "Administrator" role.
@@ -65,7 +65,7 @@ function Ensure-ElevatedPrivileges {
         If the script is elevated, it simply continues executing.
 
 3. Service Management: Manage-Services Function
-
+\```
 function Manage-Services {
     param (
         [string[]]$Services,
@@ -90,7 +90,7 @@ function Manage-Services {
     $jobs | Wait-Job | Receive-Job
     $jobs | ForEach-Object { Remove-Job -Job $_ }
 }
-
+\```
     Purpose: This function is used to start or stop Windows services.
     How it works:
         It accepts two parameters: $Services (an array of service names like bits, wuauserv) and $Action (either "Stop" or "Start").
@@ -99,7 +99,7 @@ function Manage-Services {
         It waits for all jobs to finish and then removes them from the job queue.
 
 4. Cleaning Up Incomplete Updates: Clean-Up-IncompleteUpdates Function
-
+\```
 function Clean-Up-IncompleteUpdates {
     try {
         Write-Host "Cleaning up incomplete Windows updates..." -ForegroundColor Yellow
@@ -109,14 +109,14 @@ function Clean-Up-IncompleteUpdates {
         Handle-Error ("Failed to clean up incomplete updates: $($_.Exception.Message)")
     }
 }
-
+\```
     Purpose: This function cleans up any incomplete or leftover Windows Update files from the system.
     How it works:
         It attempts to remove all files in the C:\Windows\SoftwareDistribution\Download\ folder, which is where Windows stores update files.
         If an error occurs during cleanup, it will display an error message via Handle-Error.
 
 5. Updating Progress: Update-Progress Function
-
+\```
 function Update-Progress {
     param (
         [string]$Activity,
@@ -124,14 +124,14 @@ function Update-Progress {
     )
     Write-Progress -Activity $Activity -PercentComplete $PercentComplete
 }
-
+\```
     Purpose: This function displays a progress bar in the console for long-running operations.
     How it works:
         It takes two parameters: $Activity (a description of the task) and $PercentComplete (a value between 0 and 100 indicating the progress).
         It uses the Write-Progress cmdlet to show the progress bar in the terminal.
 
 6. Ensure PSWindowsUpdate Module is Installed: Ensure-PSWindowsUpdate Function
-
+\```
 function Ensure-PSWindowsUpdate {
     if (-not (Get-Module -ListAvailable -Name PSWindowsUpdate)) {
         Write-Host "PSWindowsUpdate module is not installed. Installing now..." -ForegroundColor Yellow
@@ -142,14 +142,14 @@ function Ensure-PSWindowsUpdate {
         Import-Module PSWindowsUpdate
     }
 }
-
+\```
     Purpose: This function checks if the PSWindowsUpdate module is installed. If not, it installs and imports it.
     How it works:
         It checks if PSWindowsUpdate is available using Get-Module.
         If not found, it installs the module using Install-Module and imports it into the current session.
 
 7. Ensure winget is Installed: Ensure-Winget Function
-
+\```
 function Ensure-Winget {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
         Write-Host "winget is not installed. Installing now..." -ForegroundColor Yellow
@@ -158,14 +158,14 @@ function Ensure-Winget {
         Write-Host "winget installation complete." -ForegroundColor Green
     }
 }
-
+\```
     Purpose: This function ensures that winget (Windows Package Manager) is installed on the system.
     How it works:
         It checks whether the winget command is available.
         If not, it downloads the installer (Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.appxbundle) from the official link and installs it using Add-AppxPackage.
 
 8. Main Script Execution
-
+\```
 Write-Host "Starting Script..." -ForegroundColor Yellow
 Ensure-ElevatedPrivileges
 
@@ -173,19 +173,19 @@ Manage-Services -Services 'bits', 'wuauserv', 'appidsvc', 'cryptsvc' -Action "St
 Clean-Up-IncompleteUpdates
 Restart-Service -Name wuauserv -Force
 Write-Host "Updating Windows 11..." -ForegroundColor Yellow
-
+\```
     Purpose: The script starts by printing a message indicating it's beginning the execution, then it ensures that the script runs with elevated privileges (administrator access).
     How it works:
         It stops Windows Update-related services (bits, wuauserv, appidsvc, cryptsvc) to allow for clean updating.
         It cleans up any incomplete update files and restarts the Windows Update service (wuauserv).
 
 9. Update Windows 11
-
+\```
 Ensure-PSWindowsUpdate
 Update-Progress -Activity "Initializing Update Process" -PercentComplete 0
 $updates = Get-WindowsUpdate -AcceptAll
 ...
-
+\```
     Purpose: This section updates Windows 11 by using the PSWindowsUpdate module.
     How it works:
         It first ensures the PSWindowsUpdate module is available.
@@ -193,40 +193,39 @@ $updates = Get-WindowsUpdate -AcceptAll
         For each update, it installs the update and displays progress in the console.
 
 10. Update Installed Applications Using Winget
-
+\```
 Write-Host "Updating installed applications using Winget..." -ForegroundColor Yellow
 Ensure-Winget
 $installedApps = winget upgrade --all --include-unknown ...
-
+\```
     Purpose: This section updates all installed applications using the winget package manager.
     How it works:
         It ensures winget is installed and then uses the winget upgrade --all command to upgrade all installed applications that have available updates.
 
 11. Update Microsoft Store Apps
-
+\```
 Start-Job -ScriptBlock {
     function Update-Progress { ... }
     try { ... }
 }
-
+\```
     Purpose: This section updates all Microsoft Store apps by re-registering them.
     How it works:
         A background job is created to update all Microsoft Store apps.
         For each app, it registers it again using Add-AppxPackage to ensure it’s up-to-date.
 
 12. Job Results and Cleanup
-
+\```
 Get-Job | ForEach-Object { ... }
 Write-Host "All updates complete!" -ForegroundColor Green
-
+\```
     Purpose: This section checks the results of the background jobs.
     How it works:
         It checks if each job was successful. If any job fails, it logs an error.
         After all tasks are completed, it prints "All updates complete!"
 
 13. Restart Services
-
-Manage-Services -Services 'bits', 'wuauserv', 'appidsvc', 'cryptsvc' -Action "Start"
-
-    Purpose: Finally, it starts the services that were stopped earlier, such as bits, wuauserv, appidsvc, and cryptsvc.
 \```
+Manage-Services -Services 'bits', 'wuauserv', 'appidsvc', 'cryptsvc' -Action "Start"
+\```
+    Purpose: Finally, it starts the services that were stopped earlier, such as bits, wuauserv, appidsvc, and cryptsvc.
