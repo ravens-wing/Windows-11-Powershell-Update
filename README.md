@@ -44,7 +44,7 @@ function Handle-Error {
     )
     Write-Host $Message -ForegroundColor Red
 }
-\
+```\
     Purpose: This function is used to handle and display error messages. It takes a string parameter $Message and outputs it to the console in red to signify an error.
     How it works: Whenever an error occurs in the script, this function is called with the error message to show it in the terminal in a visually distinct color (red).
 
