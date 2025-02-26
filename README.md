@@ -27,18 +27,18 @@ https://duckduckgo.com/?t=ffab&q=install%20poweshell%20%20%22Windows%2011%22&ia=
 **To Install Powershell to the latest version:**
 
 Winkey > cmd > Run as Administrator
-Then type: ```cmd winget install --id Microsoft.PowerShell --source winget ```
+Then type: ```winget install --id Microsoft.PowerShell --source winget```
 
 **To run Powershell:**
 
 Winkey > powershell (select powershell 7 or later) > Run as Administrator
 You will be in "PS C:\Windows\System32>", if you downloaded the script to your download folder, type:
-```cmd cd $HOME\Downloads ```
+```cd $HOME\Downloads```
 
 **To run the Powershell script:**
 
 You can only run the script like this when you are in the same directory as the script. I recommend doing a reboot before running the script.
-Type: ```powershell ./updateW11.ps1 ```
+Type: ```./updateW11.ps1 ```
 
 **Goals:**
 
