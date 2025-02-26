@@ -1,8 +1,10 @@
 # Windows 11 Update - Powershell
 
+
 ## This Microsoft Powershell script has one goal - to update Windows 11. Even when the automatic update through the GUI fails.
 
 ### All risks associated with this script are on you for running it. See the "What this script does" section for details.
+
 ### This script is licensed under GNU GENERAL PUBLIC LICENSE v3, https://www.gnu.org/licenses/gpl-3.0.en.html
 
 #### Author:
@@ -10,28 +12,34 @@ https://bsky.app/profile/marcyjcook.bsky.social
 Let me know if you run the script, even if you have issues. I may be able to assist, or not.
 
 **Download**
+
 You can download the script from github releases or click the following [link](https://github.com/ravens-wing/Windows-11-Powershell-Update/releases/download/v.1.0/updatew11.ps1
 ):
 https://github.com/ravens-wing/Windows-11-Powershell-Update/releases/download/v.1.0/updatew11.ps1
 
 **How to run the script: Make sure you have powershell installed on Windows 11**
+
 https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.5, or 
 https://duckduckgo.com/?t=ffab&q=install%20poweshell%20%20%22Windows%2011%22&ia=web
 
 **To Install Powershell to the latest version:**
+
 Winkey > cmd > Run as Administrator
 Then type: winget install --id Microsoft.PowerShell --source winget
 
 **To run Powershell:**
+
 Winkey > powershell (select powershell 7 or later) > Run as Administrator
 You will be in "PS C:\Windows\System32>", if you downloaded the script to your download folder, type:
 cd $HOME\Downloads
 
 **To run the Powershell script:**
+
 You can only run the script like this when you are in the same directory as the script. I recommend doing a reboot before running the script.
 Type: ./updateW11.ps1
 
 **Goals:**
+
 Stops services associated with automatic Windows Update.
 Deletes the old temporary Windows 11 Update folders.
 Updates the core Windows 11 files.
