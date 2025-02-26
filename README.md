@@ -9,6 +9,11 @@
 https://bsky.app/profile/marcyjcook.bsky.social
 Let me know if you run the script, even if you have issues. I may be able to assist, or not.
 
+**Download**
+You can download the script from github releases or click the following [link](https://github.com/ravens-wing/Windows-11-Powershell-Update/releases/download/v.1.0/updatew11.ps1
+):
+https://github.com/ravens-wing/Windows-11-Powershell-Update/releases/download/v.1.0/updatew11.ps1
+
 **How to run the script: Make sure you have powershell installed on Windows 11**
 https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.5, or 
 https://duckduckgo.com/?t=ffab&q=install%20poweshell%20%20%22Windows%2011%22&ia=web
