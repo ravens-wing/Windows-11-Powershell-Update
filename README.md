@@ -1,7 +1,7 @@
 # Windows 11 Update - Powershell
 
 
-## This Microsoft Powershell script has one goal - to update Windows 11. Even when the automatic update through the GUI fails.
+## This Microsoft Powershell script has one goal - to update Windows 11 OS, Microsoft Store Apps, and winget registered Apps. Even when the automatic Windows Update through the GUI fails.
 
 ### All risks associated with this script are on you for running it. See the "What this script does" section for details.
 
