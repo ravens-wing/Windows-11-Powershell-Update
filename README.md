@@ -226,10 +226,50 @@ $installedApps = winget upgrade --all --include-unknown ...
 
 11. Update Microsoft Store Apps
 ```powershell
+# Updating Microsoft Store apps
+Write-Host "Updating Microsoft Store apps..." -ForegroundColor Yellow
+
 Start-Job -ScriptBlock {
-    function Update-Progress { ... }
-    try { ... }
-}
+    function Update-Progress {
+        param (
+            [string]$Activity,
+            [int]$PercentComplete
+        )
+        Write-Progress -Activity $Activity -PercentComplete $PercentComplete
+    }
+    try {
+        # Get a list of all installed apps
+        $apps = Get-AppxPackage
+        $totalApps = $apps.Count
+
+        # Check if there are apps to update
+        if ($totalApps -eq 0) {
+            Write-Host "No Microsoft Store apps found to update." -ForegroundColor Red
+            return
+        }
+        $currentApp = 0
+        # Iterate through the apps and update each one
+        $apps | ForEach-Object {
+            $currentApp++
+            $percentComplete = [math]::Round(($currentApp / $totalApps) * 100)
+            # Show progress
+            Update-Progress -Activity "Updating Microsoft Store apps" -PercentComplete $percentComplete
+            Write-Host "Updating $($_.Name)..." -ForegroundColor Cyan
+            try {
+                # Register or update the app
+                Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppxManifest.xml"
+            } catch {
+                Write-Host "Failed to update $($_.Name): $($_.Exception.Message)" -ForegroundColor Red
+            }
+        }
+        # Final progress update
+        Update-Progress -Activity "Updating Microsoft Store apps" -PercentComplete 100
+        Write-Host "Microsoft Store apps update complete." -ForegroundColor Green
+    } catch {
+        Handle-Error ("Failed to update Microsoft Store apps: $($_.Exception.Message)")
+    }
+} | Wait-Job
+
 ```
     Purpose: This section updates all Microsoft Store apps by re-registering them.
     How it works:
