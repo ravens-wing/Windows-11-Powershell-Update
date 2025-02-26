@@ -11,7 +11,7 @@
 https://bsky.app/profile/marcyjcook.bsky.social
 Let me know if you run the script, even if you have issues. I may be able to assist, or not.
 
-**Download**
+### Download
 
 You can download the script from github releases or click the following [link](https://github.com/ravens-wing/Windows-11-Powershell-Update/releases/download/v.1.0/updatew11.ps1
 ):
