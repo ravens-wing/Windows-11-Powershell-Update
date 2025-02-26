@@ -35,7 +35,7 @@ Starts services associated with automatic Windows Update.
 What this does:
 
 This is long winded, but explains what the Powershell script does.
-
+\```
 1. Error Handling: Handle-Error Function
 
 function Handle-Error {
@@ -229,3 +229,4 @@ Write-Host "All updates complete!" -ForegroundColor Green
 Manage-Services -Services 'bits', 'wuauserv', 'appidsvc', 'cryptsvc' -Action "Start"
 
     Purpose: Finally, it starts the services that were stopped earlier, such as bits, wuauserv, appidsvc, and cryptsvc.
+\```
