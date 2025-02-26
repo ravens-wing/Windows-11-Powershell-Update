@@ -33,8 +33,6 @@ Updates all installed apps registered inside the OS, which is those that winget 
 Starts services associated with automatic Windows Update.
 
 What this does:
-
-This is long winded, but explains what the Powershell script does.
 This Microsoft Powershell script has one goal - to update Windows 11. Even when the automatic update through the GUI fails.
 
 All risks associated with this script are on you for running it. See the "What this does" section for details.
@@ -72,7 +70,7 @@ Starts services associated with automatic Windows Update.
 What this does:
 
 This is long winded, but explains what the Powershell script does.
-\```powershell
+```powershell
 1. Error Handling: Handle-Error Function
 
 function Handle-Error {
@@ -266,4 +264,4 @@ Write-Host "All updates complete!" -ForegroundColor Green
 Manage-Services -Services 'bits', 'wuauserv', 'appidsvc', 'cryptsvc' -Action "Start"
 
     Purpose: Finally, it starts the services that were stopped earlier, such as bits, wuauserv, appidsvc, and cryptsvc.
-```\
+```
