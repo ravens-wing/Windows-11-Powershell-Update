@@ -42,17 +42,17 @@ Type: ```./updateW11.ps1 ```
 
 **Goals:**
 
-Stops services associated with automatic Windows Update.
+- Stops services associated with automatic Windows Update.
 
-Deletes the old temporary Windows 11 Update folders.
+- Deletes the old temporary Windows 11 Update folders.
 
-Updates the core Windows 11 files.
+- Updates the core Windows 11 files.
 
-Updates apps from the Microsoft Store.
+- Updates apps from the Microsoft Store.
 
-Updates all installed apps registered inside the OS, which is those that winget has the ability to do.
+- Updates all installed apps registered inside the OS, which is those that winget has the ability to do.
 
-Starts services associated with automatic Windows Update.
+- Starts services associated with automatic Windows Update.
 
 **What this script does:**
 
