@@ -1,0 +1,44 @@
+name: PowerShell validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Parse scripts
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem -Path . -Filter '*.ps1' -File
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              $file.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | Format-List *
+              throw "Syntax errors in $($file.Name)"
+            }
+          }
+      - name: Run PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          if (-not (Get-PSRepository -Name PSGallery -ErrorAction SilentlyContinue)) {
+            Register-PSRepository -Default
+          }
+          if (-not (Get-PSRepository -Name PSGallery -ErrorAction SilentlyContinue)) {
+            throw 'PSGallery is not registered; cannot install the analyzer.'
+          }
+          Install-Module -Name PSScriptAnalyzer -Repository PSGallery -Scope CurrentUser -Force -AllowClobber -AcceptLicense -ErrorAction Stop
+          Import-Module PSScriptAnalyzer -ErrorAction Stop
+          $issues = Invoke-ScriptAnalyzer -Path . -Recurse -Severity Error,Warning
+          $issues | Format-Table -AutoSize
+          if ($issues) { exit 1 }

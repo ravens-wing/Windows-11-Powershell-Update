@@ -1,0 +1,20 @@
+# VS Code
+.vscode/
+*.code-workspace
+
+# Snyk
+.snyk
+.snyk-policy.json
+snyk-results.json
+.github/instructions/
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
